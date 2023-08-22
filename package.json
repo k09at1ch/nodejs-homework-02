@@ -6,8 +6,9 @@
   "repository": "https://github.com/k09at1ch/nodejs-homework-02",
   "scripts": {
     "test": "node app",
-    "start": "node server.js"
+    "start": "node app.js"
   },
+
   "keywords": [
     "node",
     "app"
