@@ -8,7 +8,6 @@
     "test": "node app",
     "start": "node app.js"
   },
-
   "keywords": [
     "node",
     "app"
@@ -19,6 +18,8 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "joi": "^17.9.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nanoid": "^4.0.2",
+    "uuid": "^9.0.0"
   }
 }
