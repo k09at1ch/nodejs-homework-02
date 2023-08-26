@@ -34,23 +34,5 @@
     "email": "william@example.com",
     "phone": "987",
     "id": "f86c9f0b-ebdb-4c7d-b6e0-3e8903c693c4"
-  },
-  {
-    "name": "Olivia",
-    "email": "olivia@example.com",
-    "phone": "123",
-    "id": "b71e415d-95ac-47b3-8f66-94c39f2874e7"
-  },
-  {
-    "name": "James",
-    "email": "james@example.com",
-    "phone": "456",
-    "id": "27df7ac6-44b3-4e24-8c14-6a051e2a20d5"
-  },
-  {
-    "id": "91fbab0a-e6e2-4e01-b1f5-e1f5b58ab9f3"
-  },
-  {
-    "id": "12dbe351-d92f-49dc-b657-c7a99e680af8"
   }
 ]
