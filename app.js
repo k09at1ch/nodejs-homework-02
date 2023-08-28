@@ -17,8 +17,10 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(500).json({ message: err.message });
+  console.error(err.stack);
+  res.status(500).json({ message: 'Internal Server Error' });
 });
+
 
 app.listen(3000, () => {
   console.log(`Server is running on port 3000`);

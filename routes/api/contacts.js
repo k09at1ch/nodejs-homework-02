@@ -44,7 +44,6 @@ router.post("/", (req, res) => {
     id: uuidv4(),
   };
   contacts.push(contact);
-  console.table(contacts);
 
   fs.writeFile(
     "contacts.json",
@@ -55,20 +54,22 @@ router.post("/", (req, res) => {
         console.error("Error writing to contacts file:", err);
         return res.status(500).json({ message: "Internal Server Error" });
       }
-      res.status(200).json(contact);
     }
   );
+  res.status(200).json(contact);
 });
 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   const index = contacts.findIndex((el) => el.id === id);
+
   if (index !== -1) {
+    const deletedContact = contacts[index];
     contacts.splice(index, 1);
 
     fs.writeFile("contacts.json", JSON.stringify(contacts, null, 2), "utf8")
       .then(() => {
-        res.status(204).json();
+        res.status(200).json({ message: "Contact deleted", deletedContact });
       })
       .catch((err) => {
         console.error("Error writing to contacts file:", err);
