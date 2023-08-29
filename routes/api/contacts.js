@@ -3,23 +3,34 @@ const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs/promises");
 
-const newId = uuidv4();
+const contactsFile = "contacts.json";
 
-let contacts = [];
-fs.readFile("contacts.json", "utf8")
-  .then((data) => {
-    contacts = JSON.parse(data);
-  })
-  .catch((err) => {
+async function readContactsFromFile() {
+  try {
+    const data = await fs.readFile(contactsFile, "utf8");
+    return JSON.parse(data);
+  } catch (err) {
     console.error("Error reading contacts file:", err);
-  });
+    return [];
+  }
+}
 
-router.get("/", (req, res, next) => {
+async function writeContactsToFile(contacts) {
+  try {
+    await fs.writeFile(contactsFile, JSON.stringify(contacts, null, 2), "utf8");
+  } catch (err) {
+    console.error("Error writing to contacts file:", err);
+  }
+}
+
+router.get("/", async (req, res, next) => {
+  const contacts = await readContactsFromFile();
   res.status(200).json(contacts);
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
+  const contacts = await readContactsFromFile();
   const contact = contacts.find((el) => el.id === id);
   if (contact) {
     res.status(200).json(contact);
@@ -28,14 +39,19 @@ router.get("/:id", (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { name, phone, email } = req.body;
   console.log(req.body);
 
-  if (name === undefined || phone === undefined || email === undefined) {
-    console.log("Invalid input");
-    return res.status(400).json({ message: "Invalid input" });
+  if (!name || !phone || !email) {
+    const missingField = !name ? "name" : !phone ? "phone" : "email";
+    console.log(`Missing required ${missingField} field`);
+    return res
+      .status(400)
+      .json({ message: `Missing required ${missingField} field` });
   }
+
+  const contacts = await readContactsFromFile();
 
   const contact = {
     name,
@@ -45,58 +61,49 @@ router.post("/", (req, res) => {
   };
   contacts.push(contact);
 
-  fs.writeFile(
-    "contacts.json",
-    JSON.stringify(contacts, null, 2),
-    "utf8",
-    (err) => {
-      if (err) {
-        console.error("Error writing to contacts file:", err);
-        return res.status(500).json({ message: "Internal Server Error" });
-      }
-    }
-  );
-  res.status(200).json(contact);
+  await writeContactsToFile(contacts);
+
+  res.status(201).json(contact);
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
+  const contacts = await readContactsFromFile();
   const index = contacts.findIndex((el) => el.id === id);
 
   if (index !== -1) {
-    const deletedContact = contacts[index];
     contacts.splice(index, 1);
 
-    fs.writeFile("contacts.json", JSON.stringify(contacts, null, 2), "utf8")
-      .then(() => {
-        res.status(200).json({ message: "Contact deleted", deletedContact });
-      })
-      .catch((err) => {
-        console.error("Error writing to contacts file:", err);
-        res.status(500).json({ message: "Internal Server Error" });
-      });
+    await writeContactsToFile(contacts);
+
+    res.status(200).json({ message: "contact deleted" });
   } else {
     res.status(404).json({ message: "Contact not found" });
   }
 });
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
   const { phone, name, email } = req.body;
+  const contacts = await readContactsFromFile();
   const index = contacts.findIndex((el) => el.id === id);
 
   if (index !== -1) {
+    if (!phone || !name || !email) {
+      const missingField = !phone ? "phone" : !name ? "name" : "email";
+      console.log(`Missing required ${missingField} field`);
+      return res
+        .status(400)
+        .json({ message: `Missing required ${missingField} field` });
+    }
+
     contacts[index].phone = phone;
     contacts[index].name = name;
     contacts[index].email = email;
-    fs.writeFile("contacts.json", JSON.stringify(contacts, null, 2), "utf8")
-      .then(() => {
-        res.status(200).json(contacts[index]);
-      })
-      .catch((err) => {
-        console.error("Error writing to contacts file:", err);
-        res.status(500).json({ message: "Internal Server Error" });
-      });
+
+    await writeContactsToFile(contacts);
+
+    res.status(200).json(contacts[index]);
   } else {
     res.status(404).json({ message: "Contact not found" });
   }
