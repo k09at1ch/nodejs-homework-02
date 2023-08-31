@@ -90,11 +90,9 @@ router.put("/:id", async (req, res, next) => {
 
   if (index !== -1) {
     if (!phone || !name || !email) {
-      const missingField = !phone ? "phone" : !name ? "name" : "email";
-      console.log(`Missing required ${missingField} field`);
       return res
         .status(400)
-        .json({ message: `Missing required ${missingField} field` });
+        .json({"message": "missing fields"});
     }
 
     contacts[index].phone = phone;
