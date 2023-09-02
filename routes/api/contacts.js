@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs/promises");
+const Joi = require('joi');
 
 const contactsFile = "contacts.json";
 
@@ -39,17 +40,29 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+
+
+
+const schema = Joi.object({
+  name: Joi.string().required(),
+  phone: Joi.string().required(),
+  email: Joi.string().email().required(),
+});
+
+
+
+
 router.post("/", async (req, res) => {
+  const { error } = schema.validate(req.body);
+
+  if (error) {
+    const errorMessage = error.details.map((detail) => detail.message).join(', ');
+    console.error(`Validation error: ${errorMessage}`);
+    return res.status(400).json({ message: errorMessage });
+  }
+
   const { name, phone, email } = req.body;
   console.log(req.body);
-
-  if (!name || !phone || !email) {
-    const missingField = !name ? "name" : !phone ? "phone" : "email";
-    console.log(`Missing required ${missingField} field`);
-    return res
-      .status(400)
-      .json({ message: `Missing required ${missingField} field` });
-  }
 
   const contacts = await readContactsFromFile();
 
@@ -81,18 +94,30 @@ router.delete("/:id", async (req, res) => {
     res.status(404).json({ message: "Contact not found" });
   }
 });
-
 router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
   const { phone, name, email } = req.body;
+
+
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).json({ message: "Missing fields" });
+  }
+
   const contacts = await readContactsFromFile();
   const index = contacts.findIndex((el) => el.id === id);
 
   if (index !== -1) {
-    if (!phone || !name || !email) {
-      return res
-        .status(400)
-        .json({"message": "missing fields"});
+    const schema = Joi.object({
+      phone: Joi.string().required(),
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+    });
+
+    const { error } = schema.validate(req.body);
+
+    if (error) {
+      const errorMessage = error.details.map((detail) => detail.message).join(", ");
+      return res.status(400).json({ message: `Missing required field: ${errorMessage}` });
     }
 
     contacts[index].phone = phone;
@@ -108,3 +133,4 @@ router.put("/:id", async (req, res, next) => {
 });
 
 module.exports = router;
+
