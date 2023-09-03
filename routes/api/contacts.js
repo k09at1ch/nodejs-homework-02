@@ -55,16 +55,23 @@ const schema = Joi.object({
 router.post("/", async (req, res) => {
   const { error } = schema.validate(req.body);
 
-  if (error) {
-    const errorMessage = error.details.map((detail) => detail.message).join(', ');
-    console.error(`Validation error: ${errorMessage}`);
-    return res.status(400).json({ message: errorMessage });
-  }
 
   const { name, phone, email } = req.body;
   console.log(req.body);
 
   const contacts = await readContactsFromFile();
+  if(!phone && !name&& !email) {
+    return res.status(400).json({message: "missing fields"})
+  }
+  if (!phone) {
+    return res.status(400).json({ message: `Missing required phone field` });
+  }
+  if (!name) {
+    return res.status(400).json({ message: `Missing required name field` });
+  }
+  if (!email) {
+    return res.status(400).json({ message: `Missing required email field` });
+  }
 
   const contact = {
     name,
@@ -98,9 +105,17 @@ router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
   const { phone, name, email } = req.body;
 
-
-  if (!req.body || Object.keys(req.body).length === 0) {
-    return res.status(400).json({ message: "Missing fields" });
+  if(!phone && !name&& !email) {
+    return res.status(400).json({message: "missing fields"})
+  }
+  if (!phone) {
+    return res.status(400).json({ message: `Missing required phone field` });
+  }
+  if (!name) {
+    return res.status(400).json({ message: `Missing required name field` });
+  }
+  if (!email) {
+    return res.status(400).json({ message: `Missing required email field` });
   }
 
   const contacts = await readContactsFromFile();
@@ -117,7 +132,7 @@ router.put("/:id", async (req, res, next) => {
 
     if (error) {
       const errorMessage = error.details.map((detail) => detail.message).join(", ");
-      return res.status(400).json({ message: `Missing required field: ${errorMessage}` });
+      return res.status(400).json({ message: `Validation error: ${errorMessage}` });
     }
 
     contacts[index].phone = phone;
@@ -131,6 +146,7 @@ router.put("/:id", async (req, res, next) => {
     res.status(404).json({ message: "Contact not found" });
   }
 });
+
 
 module.exports = router;
 
