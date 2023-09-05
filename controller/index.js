@@ -113,7 +113,9 @@ const update = async (req, res, next) => {
 const updateStatus = async (req, res, next) => {
   const { id } = req.params;
   const { favorite = false } = req.body;
-
+    if(!favorite){
+        res.status(400).json({"message": "missing field favorite"})
+    }
   try {
     const result = await service.updateContact(id, { favorite });
     if (result) {
