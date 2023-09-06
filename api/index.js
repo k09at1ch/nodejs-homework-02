@@ -10,7 +10,7 @@ router.post('/contacts', ctrlContact.create)
 
 router.put('/contacts/:id', ctrlContact.update)
 
-router.patch('/contacts/:id/status', ctrlContact.updateStatus)
+router.patch('/contacts/:id/favorite', ctrlContact.updateStatus)
 
 router.delete('/contacts/:id', ctrlContact.remove)
 
