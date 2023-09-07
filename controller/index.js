@@ -1,10 +1,10 @@
 const service = require("../service");
 const Joi = require("joi");
-
+const mongoose = require("mongoose");
 const get = async (req, res, next) => {
   try {
     const results = await service.getAllcontacts();
-    res.status(200).json(results); // Оновлено відповідь, щоб повертати масив об'єктів контактів
+    res.status(200).json(results);
   } catch (e) {
     console.error(e);
     next(e);
@@ -13,10 +13,15 @@ const get = async (req, res, next) => {
 
 const getById = async (req, res, next) => {
   const { id } = req.params;
+  
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: "Not found" });
+  }
+
   try {
     const result = await service.getContactById(id);
     if (result) {
-      res.status(200).json(result); // Оновлено відповідь, щоб повертати просто об'єкт контакту
+      res.status(200).json(result);
     } else {
       res.status(404).json({ message: "not found" });
     }
@@ -53,7 +58,7 @@ const create = async (req, res, next) => {
   try {
     const result = await service.createContact({ email, phone, name });
 
-    res.status(201).json(result); // Оновлено відповідь, щоб повертати просто об'єкт контакту
+    res.status(201).json(result);
   } catch (e) {
     console.error(e);
     next(e);
@@ -63,6 +68,10 @@ const create = async (req, res, next) => {
 const update = async (req, res, next) => {
   const { id } = req.params;
   const { email, phone, name } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: "Not found" });
+  }
   if (!phone && !name && !email) {
     return res.status(400).json({ message: "missing fields" });
   }
@@ -78,7 +87,7 @@ const update = async (req, res, next) => {
       res.status(200).json(result);
     } else {
       res.status(404).json({
-        message: "Not Found",
+        message: "not found",
       });
     }
   } catch (e) {
@@ -87,21 +96,17 @@ const update = async (req, res, next) => {
   }
 };
 
-const contactSchemaStatus = Joi.object({
-  favorite: Joi.boolean().required().messages({
-    'any.required': 'missing field favorite',
-    'boolean.base': 'favorite must be a boolean',
-  }),
-});
-
 const updateStatus = async (req, res, next) => {
   const { id } = req.params;
   const { favorite = false } = req.body;
-  
+ 
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: "Not found" });
+  }
   if (favorite === undefined) {
     return res.status(400).json({ message: "missing field favorite" });
   }
-  
+
   const validationResult = contactSchemaStatus.validate({ favorite });
 
   if (validationResult.error) {
@@ -110,11 +115,11 @@ const updateStatus = async (req, res, next) => {
 
   try {
     const updatedContact = await service.updateContact(id, { favorite });
-   
+
     if (updatedContact) {
       res.status(200).json(updatedContact);
     } else {
-      res.status(404).json({ message: "Not Found" });
+      res.status(404).json({ message: "not found" });
     }
   } catch (e) {
     console.error(e);
@@ -124,16 +129,17 @@ const updateStatus = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
   const { id } = req.params;
-
+ 
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: "Not found" });
+  }
   try {
     const result = await service.removeContact(id);
     if (result) {
-      res.status(200).json(
-        result 
-      );
+      res.status(200).json(result);
     } else {
       res.status(404).json({
-        message: "Not Found"
+        message: "not found"
       });
     }
   } catch (e) {

@@ -15,3 +15,4 @@ router.patch('/contacts/:id/favorite', ctrlContact.updateStatus)
 router.delete('/contacts/:id', ctrlContact.remove)
 
 module.exports = router
+ 
