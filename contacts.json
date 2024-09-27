@@ -1,0 +1,164 @@
+[
+  {
+    "id": "1",
+    "name": "Іванч",
+    "email": "ivan.pch@example.com",
+    "phone": "+3789"
+  },
+  {
+    "id": 2,
+    "name": "Марія Іванівна",
+    "email": "maria.ivanivna@example.com",
+    "phone": "+380987654321"
+  },
+  {
+    "id": 3,
+    "name": "Олександр Григорович",
+    "email": "oleksandr.grigorovich@example.com",
+    "phone": "+380456789123"
+  },
+  {
+    "id": 4,
+    "name": "Анна Олександрівна",
+    "email": "anna.oleksandrivna@example.com",
+    "phone": "+380654321987"
+  },
+  {
+    "id": 5,
+    "name": "Петро Михайлович",
+    "email": "petro.mykhailovich@example.com",
+    "phone": "+380789123456"
+  },
+  {
+    "id": 6,
+    "name": "Ольга Петрівна",
+    "email": "olga.petrivna@example.com",
+    "phone": "+380321987654"
+  },
+  {
+    "id": 7,
+    "name": "Сергій Володимирович",
+    "email": "sergiy.volodimirovich@example.com",
+    "phone": "+380123789456"
+  },
+  {
+    "id": 8,
+    "name": "Наталія Сергіївна",
+    "email": "nataliya.sergiivna@example.com",
+    "phone": "+380987123654"
+  },
+  {
+    "id": 9,
+    "name": "Володимир Іванович",
+    "email": "volodimir.ivanovich@example.com",
+    "phone": "+380456321789"
+  },
+  {
+    "id": 10,
+    "name": "Ірина Володимирівна",
+    "email": "irina.volodimirivna@example.com",
+    "phone": "+380654789321"
+  },
+  {
+    "id": 11,
+    "name": "Михайло Андрійович",
+    "email": "mikhailo.andriyovich@example.com",
+    "phone": "+380789321654"
+  },
+  {
+    "id": 12,
+    "name": "Вікторія Михайлівна",
+    "email": "viktoriya.mykhailivna@example.com",
+    "phone": "+380321654987"
+  },
+  {
+    "id": 13,
+    "name": "Андрій Вікторович",
+    "email": "andriy.viktorovich@example.com",
+    "phone": "+380123654789"
+  },
+  {
+    "id": 14,
+    "name": "Тетяна Андріївна",
+    "email": "tetiana.andriivna@example.com",
+    "phone": "+380987654123"
+  },
+  {
+    "id": 15,
+    "name": "Григорій Олегович",
+    "email": "grigoriy.olegovich@example.com",
+    "phone": "+380456789321"
+  },
+  {
+    "id": 16,
+    "name": "Олена Григорівна",
+    "email": "olena.grigorivna@example.com",
+    "phone": "+380654321789"
+  },
+  {
+    "id": 17,
+    "name": "Леонід Анатолійович",
+    "email": "leonid.anatoliyovich@example.com",
+    "phone": "+380789123654"
+  },
+  {
+    "id": 18,
+    "name": "Анастасія Леонідівна",
+    "email": "anastasiya.leonidivna@example.com",
+    "phone": "+380321987654"
+  },
+  {
+    "id": 19,
+    "name": "Олег Андрійович",
+    "email": "oleg.andriyovich@example.com",
+    "phone": "+380123789654"
+  },
+  {
+    "id": "0f148e8f-ff84-4ead-8540-14ff7abd2066c",
+    "name": "Софлцегівна",
+    "email": "so@ex324ample.com",
+    "phone": "+3832133"
+  },
+  {
+    "name": "asdasdasd",
+    "phone": "123313232",
+    "email": "easdaewsd@ammasdd.con",
+    "id": "0f148e8f-ff84-4ead-8540-14ff7abd066c"
+  },
+  {
+    "name": "Ira",
+    "phone": "111111",
+    "email": "ira@sdfsdf.com",
+    "id": "83eb8a65-d93c-4b8a-bb66-c33b727f87ec"
+  },
+  {
+    "name": "asdasdasd",
+    "phone": "123313232",
+    "email": "easdasd@ammasdd.con",
+    "id": "404dac79-4429-4e88-858f-d472bf72fe57"
+  },
+  {
+    "name": "Софлцегіweвна",
+    "phone": "+3832132323322333",
+    "email": "so@ex324a222mple.com",
+    "id": "9e13597f-4d07-4819-97f0-2e6d39eb5822"
+  },
+  {
+    "name": "Софлцегіweвна",
+    "phone": "+3832132323322333",
+    "email": "so@ex324a222mple.com",
+    "id": "040cda53-7a44-4bbc-b968-a0573eca88dd"
+  },
+  {
+    "name": "Іванч",
+    "phone": "+3789",
+    "email": "ivan.pch@example.com",
+    "id": "aee791b6-5afe-492a-9a9b-7259453c2c49"
+  },
+  {
+    "name": "Іванч",
+    "phone": "+3789",
+    "email": "ivan.pch@example.com",
+    "id": "dab52501-2698-4259-9557-b5d9a27be7dd"
+  }
+]
